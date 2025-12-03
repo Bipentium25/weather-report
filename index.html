@@ -11,5 +11,38 @@
     <script defer src="./src/index.js"></script>
 </head>
 <body>
+    <header class="website_header">
+        <h1 id="page-title">Weather Report</h1>
+    <p id="header-city-line"></p>
+    </header>
+    <section class="card" id="temperature-card">
+        <h2>Temperature</h2>
+        <div class="temperature-controls">
+            <button id="temp-up" type="button" aria-label="Increase temperature"></button>
+            <button id="temp-down" type="button" aria-label="Decrease temperature"></button>
+            <button id="realtime-temp-btn" type="button">Get Real time temperature</button>
+        </div>
+    </section>
+    <section class="card" id="sky-card">
+        <h2>Sky</h2>
+        <p id="Sky"></p>
+        <div class="different-weathers"></div>
+        <label for="Weather-Dropdown">Choose from below:</label>
+        <select id="Weather-Dropdown" name="myDropdownName">
+        <option value="cloudy">Cloudy</option>
+        <option value="sunny">Sunny</option>
+        <option value="rainy">Rainy</option>
+        <option value="snowy">Snowy</option>
+        </select>
+    </section>
+
+    <section>
+        <h2 id="city_name" >City Name</h2>
+            <input type="text" name="usercity" placeholder="Seattle">
+            <button id="resetCityName" type="button">Reset Your City Name</button>
+    </section>
+    <section>
+        <h2>Weather Garden</h2>
+    </section>
 </body>
 </html>
