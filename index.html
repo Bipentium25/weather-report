@@ -7,27 +7,32 @@
     <title>Weather Report</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="styles/index.css">
     <script defer src="./src/index.js"></script>
 </head>
 <body>
     <header class="website_header">
-        <h1 id="page-title">Weather Report</h1>
-    <p id="header-city-line"></p>
+        <h1>Weather Report</h1>
+        <span>For the lovely city of 
+            <span id="header-city-name" class="header_city-name"></span></span>
     </header>
-    <section class="card" id="temperature-card">
+    <section class="temperature_section">
         <h2>Temperature</h2>
-        <div class="temperature-controls">
-            <button id="temp-up" type="button" aria-label="Increase temperature"></button>
-            <button id="temp-down" type="button" aria-label="Decrease temperature"></button>
-            <button id="realtime-temp-btn" type="button">Get Real time temperature</button>
+        <div class="temperature_content">
+            <div class="temperature_controls">
+                <button id="temp-up" type="button" aria-label="Increase temperature">⬆️</button>
+                <span id="temp-value"></span>
+                <button id="temp-down" type="button" aria-label="Decrease temperature">⬇️</button>
+            </div>
+            <button id="realtime-temp-btn" class="realtime_temp_btn" type="button">Get Realtime Temperature</button>
         </div>
     </section>
-    <section class="card" id="sky-card">
+    
+    <section class="sky_section">
         <h2>Sky</h2>
-        <div class="different-weathers"></div>
-        <label for="Weather-Dropdown">Choose from below:</label>
-        <select id="Weather-Dropdown" name="myDropdownName">
+        <label for="sky-dropdown">Choose sky:</label>
+        <select id="sky-dropdown" name="sky">
         <option value="cloudy">Cloudy</option>
         <option value="sunny">Sunny</option>
         <option value="rainy">Rainy</option>
@@ -35,13 +40,18 @@
         </select>
     </section>
 
-    <section>
-        <h2 id="city_name" >City Name</h2>
-            <input type="text" name="usercity" placeholder="Seattle">
-            <button id="resetCityName" type="button">Reset Your City Name</button>
+    <section class="city_section">
+        <h2>City Name</h2>
+            <input type="text" id="city-input" value="Seattle">
+            <button id="city-reset-btn" class="city_reset_btn" type="button">Reset</button>
     </section>
-    <section>
+    
+    <section class="garden_section">
         <h2>Weather Garden</h2>
+        <div id="garden-content" class="garden_content">
+            <div id="sky"></div>
+            <div id="landscape"></div>
+        </div>
     </section>
 </body>
 </html>

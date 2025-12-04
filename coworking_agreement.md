@@ -25,7 +25,7 @@ We all are open for straight feedback through discussions.
 ## One Team Communication Skill to Improve
 *What is a teamwork-related skill you want to work on?*
 Divya - I want to be more collaborative with my team , making sure following the correct path.
-Nadia - 
+Nadia - I plan to improve how I communicate my assumptions when discussing tasks or presenting solutions.
 Mengqiao - I want to be a helper in teamwork this time, I want to practice on helping people or to understand other's approaches. 
 
 ## Optional: Other agreements
@@ -34,4 +34,5 @@ Mengqiao - I want to be a helper in teamwork this time, I want to practice on he
 ## Signatures
 Divyasri Potnuru 
 Mengqiao Han
+Nadia Nelyubina
 Date: 03/12/2025
