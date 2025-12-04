@@ -59,9 +59,11 @@ const updateTemperatureUI = () => {
   landscapeEl.textContent = getLandscapeForTemperature(state.temperature);
 };
 
-const registerEventHandlers = () => {
+const registerTemperatureHandlers = () => {
   const tempUpButton = document.querySelector('#temp-up');
   const tempDownButton = document.querySelector('#temp-down');
+
+  updateTemperatureUI();
 
   if (tempUpButton) {
     tempUpButton.addEventListener('click', () => {
@@ -76,8 +78,6 @@ const registerEventHandlers = () => {
       updateTemperatureUI();
     });
   }
-
-  updateTemperatureUI();
 };
 
 const updateSkyUI = () => {
@@ -86,7 +86,6 @@ const updateSkyUI = () => {
   if (!skyEl || !gardenContentEl) return;
 
   const skyType = state.sky;
-
   skyEl.textContent = skyMap[skyType];
 
   gardenContentEl.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
@@ -108,6 +107,6 @@ const registerSkyHandlers = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  registerEventHandlers();
+  registerTemperatureHandlers();
   registerSkyHandlers();
 });
