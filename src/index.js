@@ -1,77 +1,77 @@
-"use strict";
+'use strict';
 
 const state = {
   temperature: 70,
-  sky: "cloudy",
+  sky: 'cloudy',
 };
 
 const getTemperatureColorClass = (temp) => {
   if (temp >= 80) {
-    return "red";
+    return 'red';
   } else if (temp >= 70) {
-    return "orange";
+    return 'orange';
   } else if (temp >= 60) {
-    return "yellow";
+    return 'yellow';
   } else if (temp >= 50) {
-    return "green";
+    return 'green';
   } else {
-    return "teal";
+    return 'teal';
   }
 };
 
 const getLandscapeForTemperature = (temp) => {
   if (temp >= 80) {
-    return "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
+    return '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
   } else if (temp >= 70) {
-    return "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
+    return '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
   } else if (temp >= 60) {
-    return "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
+    return '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
   } else if (temp >= 50) {
-    return "🌳🌳🍂_🍃__🪵_🌳🍂_🍃🌳";
+    return '🌳🌳🍂_🍃__🪵_🌳🍂_🍃🌳';
   } else {
-    return "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
+    return '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
   }
 };
 
 const skyMap = {
-  sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
-  cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
-  rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
-  snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+  sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  cloudy: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
+  rainy: '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  snowy: '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
 };
 
 const updateTemperatureUI = () => {
-  const tempValueEl = document.querySelector("#temp-value");
-  const landscapeEl = document.querySelector("#landscape");
-  const gardenContentEl = document.querySelector("#garden-content");
+  const tempValueEl = document.querySelector('#temp-value');
+  const landscapeEl = document.querySelector('#landscape');
+  const gardenContentEl = document.querySelector('#garden-content');
 
   if (!tempValueEl || !landscapeEl || !gardenContentEl) return;
 
   tempValueEl.textContent = state.temperature;
 
-  tempValueEl.classList.remove("red", "orange", "yellow", "green", "teal");
+  tempValueEl.classList.remove('red', 'orange', 'yellow', 'green', 'teal');
   const colorClass = getTemperatureColorClass(state.temperature);
   tempValueEl.classList.add(colorClass);
 
-  gardenContentEl.classList.remove("red", "orange", "yellow", "green", "teal");
+  gardenContentEl.classList.remove('red', 'orange', 'yellow', 'green', 'teal');
   gardenContentEl.classList.add(colorClass);
 
   landscapeEl.textContent = getLandscapeForTemperature(state.temperature);
 };
 
 const registerEventHandlers = () => {
-  const tempUpButton = document.querySelector("#temp-up");
-  const tempDownButton = document.querySelector("#temp-down");
+  const tempUpButton = document.querySelector('#temp-up');
+  const tempDownButton = document.querySelector('#temp-down');
 
   if (tempUpButton) {
-    tempUpButton.addEventListener("click", () => {
+    tempUpButton.addEventListener('click', () => {
       state.temperature += 1;
       updateTemperatureUI();
     });
   }
 
   if (tempDownButton) {
-    tempDownButton.addEventListener("click", () => {
+    tempDownButton.addEventListener('click', () => {
       state.temperature -= 1;
       updateTemperatureUI();
     });
@@ -81,33 +81,33 @@ const registerEventHandlers = () => {
 };
 
 const updateSkyUI = () => {
-  const skyEl = document.querySelector("#sky");
-  const gardenContentEl = document.querySelector("#garden-content");
+  const skyEl = document.querySelector('#sky');
+  const gardenContentEl = document.querySelector('#garden-content');
   if (!skyEl || !gardenContentEl) return;
 
   const skyType = state.sky;
 
   skyEl.textContent = skyMap[skyType];
 
-  gardenContentEl.classList.remove("cloudy", "sunny", "rainy", "snowy");
+  gardenContentEl.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
   gardenContentEl.classList.add(skyType);
 };
 
 const registerSkyHandlers = () => {
-  const skySelectEl = document.querySelector("#sky-dropdown");
+  const skySelectEl = document.querySelector('#sky-dropdown');
   if (!skySelectEl) return;
 
   state.sky = skySelectEl.value;
   updateSkyUI();
 
-  skySelectEl.addEventListener("change", (event) => {
+  skySelectEl.addEventListener('change', (event) => {
     const selectedSky = event.target.value;
     state.sky = selectedSky;
     updateSkyUI();
   });
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   registerEventHandlers();
   registerSkyHandlers();
 });
