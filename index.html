@@ -22,7 +22,7 @@
         <div class="temperature_content">
             <div class="temperature_controls">
                 <button id="temp-up" type="button" aria-label="Increase temperature">⬆️</button>
-                <span id="tempValue"></span>
+                <span id="temp-value"></span>
                 <button id="temp-down" type="button" aria-label="Decrease temperature">⬇️</button>
             </div>
             <button id="realtime-temp-btn" class="realtime_temp_btn" type="button">Get Realtime Temperature</button>
@@ -42,13 +42,13 @@
 
     <section class="city_section">
         <h2>City Name</h2>
-            <input id="city-input" type="text" name="user-city" placeholder="Seattle"/>
-            <button id="city-reset-btn" class="city_reset_btn" type="button">Reset City Name</button>
+            <input type="text" id="city-input" value="Seattle">
+            <button id="city-reset-btn" class="city_reset_btn" type="button">Reset</button>
     </section>
     
     <section class="garden_section">
         <h2>Weather Garden</h2>
-        <div id="gardenContent" class="garden_content">
+        <div id="garden-content" class="garden_content">
             <div id="sky"></div>
             <div id="landscape"></div>
         </div>

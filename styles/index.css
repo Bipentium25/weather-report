@@ -83,7 +83,7 @@ justify-content: space-around;
 /* justify-content: center; */
 }
 
-#tempValue {
+#temp-value {
 font-size: 3rem;
 margin-left: 1.5rem;
 /* padding-right: 1rem; */
@@ -133,10 +133,6 @@ color: orange;
 
 .yellow {
 color: gold;
-}
-
-.yellow-green {
-color: yellowgreen;
 }
 
 .green {
