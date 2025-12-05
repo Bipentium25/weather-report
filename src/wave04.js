@@ -29,13 +29,11 @@ const findLatitudeAndLongitude = (query) => {
 };
 
 const findweatherforcity = (latitude, longitude) => {
-  return axios.get('https://api.openweathermap.org/data/2.5/onecall', {
+  return axios.get('https://api.openweathermap.org/data/2.5/weather', {
     params: {
       lat: latitude,
       lon: longitude,
-      exclude: 'minutely,hourly,alerts,daily',
       appid: OPENWEATHER_KEY,
-      units: 'imperial'
     }
   })
     .then((response) => {
@@ -51,21 +49,32 @@ const findweatherforcity = (latitude, longitude) => {
 
 const getweatherFromUserInput = (query) => {
   return findLatitudeAndLongitude(query)
-    .then((response) => {
-      return findweatherforcity(response.latitude, response.longitude);
-    })
+    .then((response) => findweatherforcity(response.latitude, response.longitude))
+    .then((weather) => weather.main.temp)
     .catch((error) => {
-      console.log('getLocationFromQuery: error fetching location from query!');
+      console.log('Error fetching weather for query:', query, error);
     });
 };
 
-const UserCity = document.querySelector("#temp-value");
+const updateTemperatureFromUserInput = async (query) => {
+  try {
+    const temp = await getweatherFromUserInput(query);
+    state.temperature = temp;
+    updateTemperatureUI();
+  } catch (error) {
+    console.log('Failed to update temperature:', error);
+  }
+};
 
-getweatherFromUserInput(UserCity)
-  .then((weather) => {
-    console.log('Final weather:', weather);
-    return weather;
-  })
-  .catch((error) => {
-    console.error('Error getting weather:', error);
-  });
+const updateTemperatureUI = () =>{
+  const tempEl = document.getElementById('temp-value');
+  if (!tempEl) return;
+  tempEl.textContent = state.temperature;
+}
+
+
+// const getRealtimeTemp = () => {
+//   const userCityTemperature = getweatherFromUserInput(UserCity);
+
+
+// }
