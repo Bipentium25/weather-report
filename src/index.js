@@ -1,5 +1,4 @@
 'use strict';
-'use strict';
 
 const state = {
   temperature: 70,
@@ -137,8 +136,8 @@ const registerCityHandlers = () => {
 
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  registerEventHandlers();
+document.addEventListener('DOMContentLoaded', () => {
+  registerTemperatureHandlers();
   registerSkyHandlers();
   registerCityHandlers();
 });
