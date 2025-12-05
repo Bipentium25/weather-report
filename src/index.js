@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
 
 const state = {
   temperature: 70,
   sky: "cloudy",
+  defaultCity: 'Seattle',
 };
 
 const getTemperatureColorClass = (temp) => {
@@ -107,7 +108,37 @@ const registerSkyHandlers = () => {
   });
 };
 
+const updateCityName = () => {
+  const cityInput = document.getElementById('cityInput');
+  const cityNameElement = document.getElementById('header-city-name');
+ 
+  if(!cityInput || !cityNameElement)return;
+
+  cityInput.value = state.defaultCity;
+  cityNameElement.textContent = state.defaultCity;
+
+};
+const registerCityHandlers = () => {
+
+  const cityInput = document.getElementById('cityInput');
+  const cityNameElement = document.getElementById('header-city-name');
+  const resetbtn = document.getElementById('city-reset-btn');
+
+  if (!cityInput || !cityNameElement || !resetbtn)return;
+  updateCityName();
+
+  cityInput.addEventListener('input', () => {
+    cityNameElement.textContent = cityInput.value;
+  });
+  resetbtn.addEventListener('click', () => {
+    state.defaultCity = 'Seattle';
+    updateCityName();
+  });
+
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   registerEventHandlers();
   registerSkyHandlers();
+  registerCityHandlers();
 });
