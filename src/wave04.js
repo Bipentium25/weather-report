@@ -5,8 +5,6 @@ dotEnv.config();
 const LOCATIONIQ_KEY = process.env.LocationIQ_API;
 const OPENWEATHER_KEY = process.env.OpenWeather_API;
 
-let UserCity;
-
 const findLatitudeAndLongitude = (query) => {
   let latitude, longitude;
 
@@ -51,7 +49,7 @@ const findweatherforcity = (latitude, longitude) => {
 
 };
 
-const getweatherFromQuery = (query) => {
+const getweatherFromUserInput = (query) => {
   return findLatitudeAndLongitude(query)
     .then((response) => {
       return findweatherforcity(response.latitude, response.longitude);
@@ -61,7 +59,9 @@ const getweatherFromQuery = (query) => {
     });
 };
 
-getweatherFromQuery(UserCity)
+const UserCity = document.querySelector("#temp-value");
+
+getweatherFromUserInput(UserCity)
   .then((weather) => {
     console.log('Final weather:', weather);
     return weather;
