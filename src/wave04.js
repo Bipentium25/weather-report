@@ -1,21 +1,20 @@
-const axios = require('axios');
-const dotEnv = require('dotenv');
+import axios from 'axios';
 
-dotEnv.config();
-const LOCATIONIQ_KEY = process.env.LocationIQ_API;
-const OPENWEATHER_KEY = process.env.OpenWeather_API;
+const PROXY_BASE_URL = "https://ada-weather-report-proxy-server.onrender.com";
 
-let UserCity;
+const kelvinIntoFahrenheit = (kelvinTemp) =>{
+  const fahrenheitTemp = Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
+  return fahrenheitTemp;
+
+};
 
 const findLatitudeAndLongitude = (query) => {
   let latitude, longitude;
 
-  return axios.get('https://us1.locationiq.com/v1/search.php',
+  return axios.get(`${PROXY_BASE_URL}/location`,
     {
       params: {
-        key: LOCATIONIQ_KEY,
         q: query,
-        format: 'json'
       }
     })
     .then((response) => {
@@ -31,13 +30,10 @@ const findLatitudeAndLongitude = (query) => {
 };
 
 const findweatherforcity = (latitude, longitude) => {
-  return axios.get('https://api.openweathermap.org/data/2.5/onecall', {
+  return axios.get(`${PROXY_BASE_URL}/weather`, {
     params: {
       lat: latitude,
       lon: longitude,
-      exclude: 'minutely,hourly,alerts,daily',
-      appid: OPENWEATHER_KEY,
-      units: 'imperial'
     }
   })
     .then((response) => {
@@ -51,21 +47,42 @@ const findweatherforcity = (latitude, longitude) => {
 
 };
 
-const getweatherFromQuery = (query) => {
+const getweatherFromUserInput = (query) => {
   return findLatitudeAndLongitude(query)
-    .then((response) => {
-      return findweatherforcity(response.latitude, response.longitude);
-    })
+    .then((response) => findweatherforcity(response.latitude, response.longitude))
+    .then((weather) => weather.main.temp)
     .catch((error) => {
-      console.log('getLocationFromQuery: error fetching location from query!');
+      console.log('Error fetching weather for query:', query, error);
     });
 };
 
-getweatherFromQuery(UserCity)
-  .then((weather) => {
-    console.log('Final weather:', weather);
-    return weather;
-  })
-  .catch((error) => {
-    console.error('Error getting weather:', error);
+
+
+const updateTemperatureFromUserInput = async (query) => {
+  try {
+    const temp = await getweatherFromUserInput(query);
+    const Fahtemp =kelvinIntoFahrenheit(temp);
+    console.log(Fahtemp);
+    state.temperature = Fahtemp;
+    updateTemperatureUI();
+  } catch (error) {
+    console.log('Failed to update temperature:', error);
+  }
+};
+
+
+function registerRealtimeTemperatureHandler() {
+  const realtimeBtn = document.querySelector('#realtime-temp-btn');
+  realtimeBtn.addEventListener('click', () => {
+    const inputCity = document.querySelector('#city-input').value;
+    updateTemperatureFromUserInput(inputCity);
   });
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  registerTemperatureHandlers();
+  registerSkyHandlers();
+  registerCityHandlers();
+  registerRealtimeTemperatureHandler();
+});
