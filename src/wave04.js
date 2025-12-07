@@ -1,19 +1,20 @@
-const axios = require('axios');
-const dotEnv = require('dotenv');
+import axios from 'axios';
 
-dotEnv.config();
-const LOCATIONIQ_KEY = process.env.LocationIQ_API;
-const OPENWEATHER_KEY = process.env.OpenWeather_API;
+const PROXY_BASE_URL = "https://ada-weather-report-proxy-server.onrender.com";
+
+const kelvinIntoFahrenheit = (kelvinTemp) =>{
+  const fahrenheitTemp = Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
+  return fahrenheitTemp;
+
+};
 
 const findLatitudeAndLongitude = (query) => {
   let latitude, longitude;
 
-  return axios.get('https://us1.locationiq.com/v1/search.php',
+  return axios.get(`${PROXY_BASE_URL}/location`,
     {
       params: {
-        key: LOCATIONIQ_KEY,
         q: query,
-        format: 'json'
       }
     })
     .then((response) => {
@@ -29,11 +30,10 @@ const findLatitudeAndLongitude = (query) => {
 };
 
 const findweatherforcity = (latitude, longitude) => {
-  return axios.get('https://api.openweathermap.org/data/2.5/weather', {
+  return axios.get(`${PROXY_BASE_URL}/weather`, {
     params: {
       lat: latitude,
       lon: longitude,
-      appid: OPENWEATHER_KEY,
     }
   })
     .then((response) => {
@@ -56,25 +56,33 @@ const getweatherFromUserInput = (query) => {
     });
 };
 
+
+
 const updateTemperatureFromUserInput = async (query) => {
   try {
     const temp = await getweatherFromUserInput(query);
-    state.temperature = temp;
+    const Fahtemp =kelvinIntoFahrenheit(temp);
+    console.log(Fahtemp);
+    state.temperature = Fahtemp;
     updateTemperatureUI();
   } catch (error) {
     console.log('Failed to update temperature:', error);
   }
 };
 
-const updateTemperatureUI = () =>{
-  const tempEl = document.getElementById('temp-value');
-  if (!tempEl) return;
-  tempEl.textContent = state.temperature;
+
+function registerRealtimeTemperatureHandler() {
+  const realtimeBtn = document.querySelector('#realtime-temp-btn');
+  realtimeBtn.addEventListener('click', () => {
+    const inputCity = document.querySelector('#city-input').value;
+    updateTemperatureFromUserInput(inputCity);
+  });
 }
 
 
-// const getRealtimeTemp = () => {
-//   const userCityTemperature = getweatherFromUserInput(UserCity);
-
-
-// }
+document.addEventListener('DOMContentLoaded', () => {
+  registerTemperatureHandlers();
+  registerSkyHandlers();
+  registerCityHandlers();
+  registerRealtimeTemperatureHandler();
+});
