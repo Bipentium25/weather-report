@@ -110,7 +110,6 @@ const registerSkyHandlers = () => {
 const updateCityName = () => {
   const cityInput = document.getElementById('cityInput');
   const cityNameElement = document.getElementById('header-city-name');
- 
   if(!cityInput || !cityNameElement)return;
 
   cityInput.value = state.defaultCity;
@@ -137,7 +136,7 @@ const registerCityHandlers = () => {
 };
 // wave_04
 
-const PROXY_BASE_URL = "https://ada-weather-report-proxy-server.onrender.com";
+const PROXY_BASE_URL = 'https://ada-weather-report-proxy-server.onrender.com';
 
 const kelvinIntoFahrenheit = (kelvinTemp) =>{
   const fahrenheitTemp = Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
@@ -161,7 +160,7 @@ const findLatitudeAndLongitude = (query) => {
       return {latitude, longitude};
     })
     .catch((error) => {
-      console.log('error in findLatitudeAndLongitude!');
+      console.log('error in findLatitudeAndLongitude!', error);
     });
 };
 
